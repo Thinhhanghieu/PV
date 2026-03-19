@@ -1,30 +1,33 @@
-# English Self-Introduction Template
-*Mục tiêu: Thể hiện kinh nghiệm dày dặn, sự chuyên nghiệp và lý do tại sao bạn chọn LG CNS.*
+# English Self-Introduction (Senior Frontend Developer)
+
+## 1. Professional Script (Thinh - 4 Years at LG CNS)
+
+"Hello, my name is **Thinh**. I am a **Senior Frontend Developer** with **4 years of experience**, primarily specialized in building complex systems at **LG CNS**.
+
+Throughout my career, I have developed a strong expertise in the **Fintech domain**, specifically in **Loan management systems** and **Real-time Trading platforms**. 
+
+- In my **Loan projects**, I was responsible for architecting complex dynamic form systems with intricate cross-field dependencies. I successfully implemented a metadata-driven UI approach that significantly reduced code duplication and improved maintainability.
+- In the **Trading domain**, I focused heavily on **performance optimization**. I implemented advanced patterns using **Web Workers** for background data processing and **requestAnimationFrame** for UI synchronization to handle high-frequency WebSocket updates, ensuring a smooth 60 FPS experience for our users.
+
+Besides my technical contributions, I am also passionate about **Mentoring** junior developers and establishing **Coding Standards** within the team to ensure high-quality delivery. 
+
+I am looking for a new challenge where I can apply my experience in large-scale System Integration (SI) projects to contribute to your company's growth. Thank you."
 
 ---
 
-## 1. Version: Formal & Enterprise-Focused
-"Hi, my name is [Your Name]. I am a Frontend Developer with 4 years of experience, specializing in **React and TypeScript**. 
+## 2. Chiến thuật trả lời (Tips for Thinh)
 
-Throughout my career, I have worked on several complex web systems, from [mention a domain like E-commerce/Banking] to internal management tools. My core strength lies in **building scalable UI components** and **optimizing web performance** for large-scale applications. 
+### A. Cách phát âm & Từ khóa (Keywords)
+- **LG CNS:** Đọc rõ từng chữ L-G-C-N-S.
+- **Fintech / Trading / Loan:** Những từ khóa này là "nam châm" thu hút sự chú ý.
+- **Performance Optimization:** Nhấn mạnh cụm này khi nói về dự án Trading.
+- **Metadata-driven / Scalability:** Dùng khi nói về dự án Loan để thể hiện tư duy kiến trúc.
 
-One of my most notable projects involved [mention a success, e.g., optimizing a dashboard that handled thousands of data points with zero lag, which improved the load time by 40%]. 
+### B. Cấu trúc 3 phần (The 3-Part Structure)
+1.  **The Past (Who am I):** Tên, 4 năm kinh nghiệm tại LG CNS.
+2.  **The Present (What I can do):** Kinh nghiệm thực chiến về Trading (Performance) và Loan (Business Logic).
+3.  **The Future (Why I am here):** Muốn mang kinh nghiệm SI vào công ty mới.
 
-I have long admired **LG CNS** for its reputation as a global leader in IT services and its involvement in massive, impactful projects. Given my background in enterprise-level development and my focus on high-quality code, I am confident that I can contribute effectively to LG CNS's upcoming projects. I am really excited to be here and discuss how I can bring value to the team."
-
----
-
-## 2. Key Vocabulary for LG CNS
-- **Scalability:** Khả năng mở rộng.
-- **Maintainability:** Khả năng bảo trì code.
-- **Enterprise-grade:** Quy mô doanh nghiệp lớn.
-- **System Integration (SI):** Tích hợp hệ thống.
-- **Optimization:** Tối ưu hóa.
-- **Standardization:** Quy chuẩn hóa.
-
----
-
-## 3. Pronunciation Tips
-- Nhấn mạnh vào tên công ty: **LG CNS**.
-- Nói chậm rãi, rõ ràng ở các phần liệt kê công nghệ (React, TypeScript).
-- Kết thúc bằng một nụ cười và lời cảm ơn: "Thank you for your time."
+### C. Lưu ý nhỏ
+- Hãy nói với phong thái tự tin (Senior level). 
+- Nếu giám khảo hỏi sâu vào "How did you optimize?", anh hãy dùng ngay các từ khóa **Web Worker, Buffer, rAF** mà mình đã ôn luyện ở các file [Technical](file:///c:/Users/ECO1176-THINHND/Desktop/learning/PV/ANSWERS_TECHNICAL.md) và [Project](file:///c:/Users/ECO1176-THINHND/Desktop/learning/PV/ANSWERS_PROJECT.md).
