@@ -1,33 +1,43 @@
 # English Self-Introduction (Senior Frontend Developer)
 
-## 1. Professional Script (Thinh - 4 Years at LG CNS)
+## 1. Professional Script (Thinh - 4 Years of Experience)
 
-"Hello, my name is **Thinh**. I am a **Senior Frontend Developer** with **4 years of experience**, primarily specialized in building complex systems at **LG CNS**.
+"Hello, my name is **Thinh**. I am a **Senior Frontend Developer** with **4 years of experience** specializing in the **Fintech domain**, specifically in **Loan management systems** and **Real-time Trading platforms**.
 
-Throughout my career, I have developed a strong expertise in the **Fintech domain**, specifically in **Loan management systems** and **Real-time Trading platforms**. 
+Throughout my career, I have developed a strong expertise in building complex, high-performance web applications:
 
-- In my **Loan projects**, I was responsible for architecting complex dynamic form systems with intricate cross-field dependencies. I successfully implemented a metadata-driven UI approach that significantly reduced code duplication and improved maintainability.
-- In the **Trading domain**, I focused heavily on **performance optimization**. I implemented advanced patterns using **Web Workers** for background data processing and **requestAnimationFrame** for UI synchronization to handle high-frequency WebSocket updates, ensuring a smooth 60 FPS experience for our users.
+- In my **Loan projects**, I architected a metadata-driven UI approach for complex dynamic forms with intricate cross-field dependencies. This significantly improved maintainability and allowed us to deploy new loan products much faster.
+- In the **Trading domain**, I focused heavily on **Performance Optimization**. I implemented advanced patterns using **Web Workers** for background data processing and **requestAnimationFrame** for UI synchronization to handle high-frequency WebSocket updates (100+ updates/sec), ensuring a smooth 60 FPS experience.
 
-Besides my technical contributions, I am also passionate about **Mentoring** junior developers and establishing **Coding Standards** within the team to ensure high-quality delivery. 
-
-I am looking for a new challenge where I can apply my experience in large-scale System Integration (SI) projects to contribute to your company's growth. Thank you."
+I am very interested in joining **LG CNS** because of your reputation for delivering large-scale, enterprise-level solutions. I believe my experience in System Integration (SI) and my focus on building scalable, performant frontends would be a great fit for your team. Thank you."
 
 ---
 
-## 2. Chiến thuật trả lời (Tips for Thinh)
+## 2. Potential Follow-up Questions (Skill-based)
 
-### A. Cách phát âm & Từ khóa (Keywords)
-- **LG CNS:** Đọc rõ từng chữ L-G-C-N-S.
-- **Fintech / Trading / Loan:** Những từ khóa này là "nam châm" thu hút sự chú ý.
-- **Performance Optimization:** Nhấn mạnh cụm này khi nói về dự án Trading.
-- **Metadata-driven / Scalability:** Dùng khi nói về dự án Loan để thể hiện tư duy kiến trúc.
+Dưới đây là các câu hỏi nhà tuyển dụng có thể hỏi xoay quanh Skill của anh sau khi anh giới thiệu:
 
-### B. Cấu trúc 3 phần (The 3-Part Structure)
-1.  **The Past (Who am I):** Tên, 4 năm kinh nghiệm tại LG CNS.
-2.  **The Present (What I can do):** Kinh nghiệm thực chiến về Trading (Performance) và Loan (Business Logic).
-3.  **The Future (Why I am here):** Muốn mang kinh nghiệm SI vào công ty mới.
+### A. Về Performance (Dự án Trading)
+1. **"Why use Web Workers instead of just Throttling?"**
+   - *Trả lời:* Web Workers giúp tách biệt hoàn toàn việc xử lý dữ liệu nặng ra khỏi Main Thread, đảm bảo UI không bao giờ bị đứng (block) ngay cả khi tính toán phức tạp. Throttling chỉ giảm số lần render, nhưng nếu logic xử lý vẫn ở Main Thread thì vẫn có rủi ro gây lag.
+2. **"How does `requestAnimationFrame` help in your Trading app?"**
+   - *Trả lời:* Nó giúp đồng bộ hóa việc cập nhật UI với tần số quét của màn hình (thường là 60Hz), giúp chuyển động mượt mà hơn và tránh việc render thừa khi màn hình chưa sẵn sàng.
 
-### C. Lưu ý nhỏ
-- Hãy nói với phong thái tự tin (Senior level). 
-- Nếu giám khảo hỏi sâu vào "How did you optimize?", anh hãy dùng ngay các từ khóa **Web Worker, Buffer, rAF** mà mình đã ôn luyện ở các file [Technical](file:///c:/Users/ECO1176-THINHND/Desktop/learning/PV/ANSWERS_TECHNICAL.md) và [Project](file:///c:/Users/ECO1176-THINHND/Desktop/learning/PV/ANSWERS_PROJECT.md).
+### B. Về Architecture (Dự án Loan)
+1. **"What are the benefits of a metadata-driven UI?"**
+   - *Trả lời:* Nó giúp tách biệt giữa Logic hiển thị và Code. Khi cần thêm một loại hình vay mới, chúng ta chỉ cần cập nhật file cấu hình (JSON) thay vì sửa code trong Component, giúp giảm thiểu rủi ro lỗi regression.
+2. **"How do you handle complex cross-field validation?"**
+   - *Trả lời:* Tôi dùng **Schema Validation (Zod/Yup)** kết hợp với một **Centralized Form State**. Việc validate được thực hiện dựa trên toàn bộ context của form thay vì từng field riêng lẻ.
+
+### C. Về Core JS & React
+1. **"Local Storage vs Cookie: Which one is better for Auth tokens?"**
+   - *Trả lời:* Ưu tiên **HttpOnly Cookie** để chống XSS. Nếu dùng Local Storage, phải cực kỳ cẩn thận với vấn đề bảo mật.
+2. **"How do you coordinate data between multiple open tabs?"**
+   - *Trả lời:* Dùng **Broadcast Channel API** cho các thông báo thời gian thực hoặc sự kiện **`storage`** cho các thay đổi dữ liệu bền vững.
+
+---
+
+## 3. Chiến thuật trả lời (Tips)
+- **Be Specific:** Khi nói về dự án, hãy nêu số liệu (Vd: "Handle 100+ updates per second").
+- **Focus on 'Why':** Đừng chỉ nói "Tôi dùng X", hãy nói "Tôi dùng X vì nó giải quyết được vấn đề Y".
+- **Bridge to LG CNS:** Luôn cố gắng liên hệ kinh nghiệm SI của anh với môi trường làm việc tại LG CNS (Ổn định, Quy trình, Chất lượng).
