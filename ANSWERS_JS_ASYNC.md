@@ -36,15 +36,21 @@ Khi anh dùng `await`, JS sẽ "tạm dừng" hàm đó, đưa phần code còn 
 
 ---
 
-## 4. Các kịch bản phỏng vấn thực tế
+---
 
-### Q1: Làm sao để chạy 3 API song song để tối ưu thời gian?
-- **Trả lời:** Dùng `Promise.all([api1, api2, api3])`. Tổng thời gian sẽ bằng API lâu nhất thay vì cộng dồn (Sequential).
+## 5. Deep Dive: `Promise.all` hoạt động thế nào "under the hood"?
 
-### Q2: Sự khác biệt giữa `Promise.all` và `Promise.allSettled`?
-- `Promise.all`: Thất bại ngay lập tức nếu có 1 API lỗi.
-- `Promise.allSettled`: Chờ tất cả xong hết (kể cả lỗi) mới trả về kết quả. Rất hữu ích khi anh muốn hiển thị những gì tải được lên UI thay vì báo lỗi cả trang.
+Đây là câu hỏi "bẫy" để phân loại Senior. Hãy giải thích theo 5 bước nội bộ sau:
 
-### Q3: Vấn đề Async trong vòng lặp `forEach`?
-- **Lưu ý:** `forEach` không hỗ trợ async/await (nó sẽ không đợi). 
-- **Giải pháp:** Dùng vòng lặp `for...of` hoặc `Promise.all(array.map(...))`.
+1.  **Khởi tạo:** `Promise.all` nhận vào một Iterable (thường là mảng). Nó tạo ra một **Promise Mới** để trả về và 2 biến nội bộ: `count` (biến đếm số Promise đã xong) và `results` (mảng chứa kết quả).
+2.  **Duyệt mảng (Đồng bộ):** Nó duyệt qua mảng đầu vào theo thứ tự. Nếu phần tử nào không phải Promise, nó sẽ bọc lại bằng `Promise.resolve()`.
+3.  **Đăng ký Handler:** Với mỗi Promise, nó đăng ký một `.then()` thành công và một `.catch()` thất bại.
+4.  **Tương tác Event Loop (Microtasks):**
+    - Khi một Promise con hoàn thành, callback thành công của nó được đẩy vào **Microtask Queue**.
+    - Khi Event Loop thực thi callback này, nó sẽ gán kết quả vào `results` **đúng chỉ số (index)** ban đầu và tăng `count`.
+    - **Lưu ý:** Thứ tự các Promise xong có thể lộn xộn, nhưng mảng `results` luôn bảo toàn đúng thứ tự truyền vào.
+5.  **Kết thúc:**
+    - **Thành công:** Khi `count` bằng đúng độ dài mảng đầu vào, Promise chính sẽ được **Resolve** với mảng `results`.
+    - **Thất bại (Fail-fast):** Chỉ cần một Promise con bị **Reject**, Promise chính sẽ bị Reject ngay lặp tức với lỗi đó, không chờ các Promise còn lại nữa.
+
+**Ẩn dụ:** Giống như anh đi ăn lẩu cùng 3 người bạn. Anh là `Promise.all`, 3 người bạn là 3 Promise con. Anh chỉ bắt đầu ăn (`resolve`) khi **TẤT CẢ** bạn anh đã đến đủ. Nếu có 1 người báo bận (`reject`), anh hủy kèo đi nhậu luôn (`reject ngay lập tức`).

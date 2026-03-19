@@ -6,26 +6,37 @@ Tài liệu này tổng hợp các tình huống dự án thực tế về Loan 
 
 ## 1. Case Study: Dự án Tài chính (Loan Project)
 
-**Câu hỏi: "Hãy kể về một lần bạn xử lý logic nghiệp vụ cực kỳ phức tạp?"**
-1.  **Bối cảnh (Situation):** Dự án cho vay yêu cầu hệ thống validate hàng chục điều kiện phụ thuộc lẫn nhau (Tuổi, lương, lịch sử tín dụng, vùng miền...).
-2.  **Thách thức (Task):** Code cũ dùng lồng nhiều `if-else`, rất khó bảo trì và dễ lỗi khi có thêm điều kiện mới.
+**Câu hỏi: "Hãy kể về một lần bạn xử lý logic nghiệp vụ cực kỳ phức tạp ở Frontend?"**
+1.  **Bối cảnh (Situation):** Dự án cho vay (Loan) với quy trình đăng ký 5 bước. Mỗi bước có hàng chục trường dữ liệu và **Logic ràng buộc chéo (Cross-field dependencies)** cực kỳ dày đặc.
+2.  **Thách thức (Task - Challenge):** 
+    - Các trường xuất hiện dựa trên điều kiện của trường khác (Vd: Nếu chọn "Vay tín chấp" thì hiện trường Lương, ẩn trường Tài sản đảm bảo).
+    - Code cũ xử lý bằng hàng trăm dòng `if-else` lồng nhau ngay trong Component, dẫn đến việc cực kỳ khó debug và dễ sót case validation.
 3.  **Hành động (Action - Senior approach):**
-    - Áp dụng **Strategy Pattern** để tách mỗi điều kiện validate thành một lớp/hàm riêng biệt.
-    - Xây dựng một **Validation Engine** để chạy tuần tự các điều kiện này.
-    - Viết Unit Test phủ 100% các case biên.
-4.  **Kết quả (Result):** Thời gian thêm điều kiện mới giảm từ 2 ngày xuống 2 giờ, tỷ lệ bug logic về 0.
+    - **Metadata-driven UI:** Tôi đã tách toàn bộ logic ràng buộc sang một file cấu hình JSON (Metadata). Thay vì code tay từng `if`, tôi viết một "Engine" nhỏ để đọc cấu hình này.
+    - **Logic Centralization:** Xây dựng một **Custom Hook (`useFormLogic`)** để tập trung toàn bộ việc tính toán trạng thái (ẩn/hiện, bắt buộc/không) cho toàn bộ form.
+    - **Schema Validation:** Sử dụng thư viện **Zod** để định nghĩa schema và validate toàn bộ dữ liệu phức tạp đó một cách tường minh.
+4.  **Kết quả (Result):** Giảm 40% lượng code thừa, thời gian thêm một loại hình vay mới từ 2 ngày xuống còn 4 giờ, và tỷ lệ bug logic sau khi go-live giảm về 0.
 
 ---
 
 ## 2. Case Study: Dự án Trading (Real-time Performance)
 
 **Câu hỏi: "Bạn làm gì khi app bị lag vì dữ liệu cập nhật quá nhanh (Trading)?"**
-1.  **Biểu hiện:** UI bị khựng (janky) do React re-render liên tục mỗi khi có giá mới từ WebSocket.
-2.  **Giải pháp (Senior approach):**
-    - Áp dụng **Throttling/Batching**: Thay vì render mỗi tick dữ liệu, tôi gom dữ liệu lại và chỉ cập nhật UI mỗi 100ms.
-    - Dùng `useMemo` và `React.memo` cho các biểu đồ nến (candlestick chart).
-    - Offload việc xử lý dữ liệu thô sang **Web Worker** để giải phóng main thread.
-3.  **Kết quả:** CPU usage giảm 40%, FPS ổn định ở mức 60 ngay cả trên các máy cấu hình yếu.
+
+Đây là **Luồng xử lý dữ liệu (Data Pipeline)** 5 bước để đảm bảo app chạy mượt ở 60 FPS:
+
+1.  **WebSocket (Raw Data):** Nhận luồng dữ liệu thô (JSON) từ server với tần suất cực cao (Vd: 100 log/giây).
+2.  **Web Worker (Offload):** Tôi đẩy toàn bộ dữ liệu thô này sang **Web Worker** qua `postMessage`. 
+    - *Tại sao?* Để Main Thread hoàn toàn rảnh tay xử lý các tương tác của người dùng (Click, Scroll).
+    - *Nhận cái gì?* Worker nhận mảng các biến giá thô, thực hiện tính toán chỉ số kỹ thuật (RSI, MACD) hoặc lọc dữ liệu (Filter).
+3.  **useRef (Data Buffering):** Khi Worker gửi data đã xử lý về, tôi **Không** set vào State ngay. Tôi lưu nó vào một biến **`useRef`** (Vd: `latestDataRef.current`).
+    - *Tại sao?* Vì `useRef` thay đổi KHÔNG gây re-render. Điều này giúp tránh việc React bị quá tải do số lần re-render quá lớn.
+4.  **requestAnimationFrame (Throttled UI Update):** Tôi dùng **`requestAnimationFrame`** (hoặc `setInterval` 100ms) để tạo một vòng lặp "pulling":
+    - Cứ mỗi 16.6ms (chu kỳ 1 frame của màn hình), tôi mới lấy dữ liệu mới nhất từ `useRef` và cập nhật vào `useState` một lần duy nhất.
+5.  **Virtualization:** Với các bảng lệnh (Orderbook) hàng ngàn dòng, tôi dùng `react-window` để chỉ render ~20 dòng thực sự hiển thị trên màn hình.
+
+**Kết quả:** CPU Usage giảm từ 80% xuống 15%, không còn hiện tượng "Janky UI" (giật lag), app phản hồi tức thì với thao tác của User.
+
 ---
 
 ## 1. Tình huống Dự án cụ thể
